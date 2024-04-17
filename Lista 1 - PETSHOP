@@ -197,8 +197,24 @@
 ;não está disponível). Defina 3 constantes cujos valores sejam do tipo PetShop.
 ;=====================================================================================================
 
-;(define-struct PetShop (...))
-;...
+(define-struct PetShop (nome endereco telefone Vet1 Vet2))
+  ;Um elemento do tipo Petshop tem o formato: (make-Petshop (nome endereco telefone Vet1 Vet2))      
+;onde:
+  ;nome:String
+  ;endereco:String
+  ;telefone:Numero
+  ;Vet1:String
+  ;Vet2:String
+
+(define Petshop1
+  (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 "Dr. Xavier" "Dr. Erik Magnus"))
+
+(define Petshop2
+  (make-PetShop "Liga dos Pets" "Avenida Opal" 19122019 "Dr. Bruce" "Dr. Clark"))
+
+(define Petshop3
+  (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "Dr. Ana" "Dr. Carlos"))
+
 
 ;#####################################################################################################
 ;### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 #####
