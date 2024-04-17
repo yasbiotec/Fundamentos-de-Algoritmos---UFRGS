@@ -1,0 +1,270 @@
+;#####################################################################################################
+;; IDENTIFICAÇÃO DO GRUPO
+;; Escreva abaixo, em ordem alfabética, o nome e número de matrícula de todos os membros do grupo:
+;;    Nome Sobrenome Matrícula
+;; 1. Daniel Rocha Silva
+;; 2. André
+;; 3. Gabriela
+;; 4. Yasmin
+;#####################################################################################################
+
+;#####################################################################################################
+;### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 #####
+;#####################################################################################################
+;=====================================================================================================
+;Defina um tipo de dados chamado Pet, que deve registrar o nome de um animal de estimação (pet), a sua
+;cor, a sua idade, o nome do seu dono e o tipo de animal ele é (ex.: "Gato", "Cachorro","Cavalo", etc).
+;O nome do pet, a cor o nome do dono e o tipo do animal devem ser do tipo String, e a idade deve ser do
+;tipo Número. Defina 4 constantes cujos valores sejam do tipo Pet.   
+;Defina também um tipo de dados chamado Vet, que deve registrar o nome de um veterinário, o seu turno de plantão (que pode ser "Manhã", "Tarde" ou "Noite"), a sua especialidade (o tipo de animal que ele atende) e os três espaços de atendimentos deste veterinário. O nome, o turno e a especialidade devem ser do tipo String. Cada espaço de atendimento pode ser um animal (tipo Pet) ou pode estar livre (neste caso, deve ser utilizada a string "livre"). Defina 4 constantes cujos valores sejam do tipo Vet.  Você deve usar EXATAMENTE os nomes dos tipos de dados e a ordem dos argumentos definidos acima, mas
+;pode escolher os nomes que quiser para os atributos).
+;=====================================================================================================
+
+;--------------------------------
+; TIPO PetOuString:
+;--------------------------------
+; o Tipo PetOuString é:
+; 1. Um elemento do tipo Pet, ou
+; 2. String, uma string.
+
+
+(define-struct Pet ( nome_pet cor idade dono tipo_animal))
+; Um elemento do conjunto Pet é uma estrutura
+;; (make-Pet cor idade dono tipo_animal), onde:
+;; nome_pet,: string, onde representa o nome do animal
+;; cor: string, onde representa a cor do animal
+;; idade: número, um número que representa a idade do animal
+;; dono: string, uma string que é o nome do dono do animal
+;; tipo_animal: string, onde representa qual a espécie do animal
+
+;;Constantes do tipo Pet:
+(define Jubileu (make-Pet "jubileu" "preto" 20 "xandao" "cachorro"))
+(define Babao (make-Pet "Babao" "azul" 30 "livia" "peixe"))
+(define Biu (make-Pet "Biu" "laranja" 2 "daniel" "boi"))
+(define Rosinha (make-Pet "Rosinha" "vermelha" 5 "Claudio" "leao"))
+(define Fofa (make-Pet "Fofa" "marrom" 3 "kaka" "ema"))
+
+(define-struct Vet (nome_vet turno especialidade atend1 atend2 atend3))
+;; Um elemento do conjunto Vet é uma estrutura
+;; (make-Vet nome_vet turno especialidade atend1 atend2 atend3), onde:
+;; nome_vet: string, onde representa o nome do veterinário.
+;; turno: string, representa qual turno do trabalho do veterinário.
+;; especialidade: string, representa a especialidade de trabalho do veterinário.
+;; atend1: PetOustring, representa qual Pet o veterinário atende, ou nenhum caso esteja vago.
+;; atend2: PetOustring, representa qual Pet o veterinário atende, ou nenhum caso esteja vago.
+;; atend3: PetOustring, representa qual Pet o veterinário atende, ou nenhum caso esteja vago.
+
+
+;Constantes do tipo Vet:
+(define Vitor (make-Vet "Vitor" "manhã" "cancer" "livre" "livre" Biu))
+(define Mari (make-Vet "Mari" "noite" "gravidez" Jubileu "livre" "livre"))
+(define Rogerao (make-Vet "Rogerao" "tarde" "silvestres" "livre" Rosinha Fofa))
+(define Jamile (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao "livre"))
+(define Ney (make-Vet "Ney" "noite" "gravidez" Biu Fofa Jubileu))
+;...
+
+
+
+
+;#####################################################################################################
+;### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 ### 1 #####
+;#####################################################################################################
+
+
+
+
+;#####################################################################################################
+;### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 #####
+;#####################################################################################################
+;=====================================================================================================
+;Desenvolva um função chamada é-pet? que, dado um Pet ou uma String, verifica se a entrada é do tipo
+;Pet ou do tipo String, retornando verdadeiro se for do tipo Pet e falso caso contrário.
+;=====================================================================================================
+
+; ---------------
+; FUNÇÃO  é-pet?:
+; ---------------
+
+;;é-pet?: PetOuString -> Booleano9
+;; Objetivo: Dada a entrada Pet ou String, retorna um valor booleano de acordo com a entrada. ;; Caso seja do tipo pet, retorna true, caso seja uma String, devolve false.
+;;Exemplos: 
+;  (é-pet? Biu) -> true
+;  (é-pet? "livre") -> false
+
+; Corpo
+(define (é-pet? PetOuString) ;; Dado um PetOu String
+  (cond ;; se...
+  [(not (string? PetOuString)) #true] ;; se a entrada for do tipo Pet, retorna true
+  [else #false])) ;; caso contrário, retorna false
+
+; testes da função é-pet?
+(check-expect (é-pet? Biu) #true)
+(check-expect (é-pet? "livre") #false)
+
+
+;#####################################################################################################
+;### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 ### 2 #####
+;#####################################################################################################
+
+
+
+;#####################################################################################################
+;### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 #####
+;#####################################################################################################
+;=====================================================================================================
+;Construa uma função verifica-disponibilidade que, dado um veterinário, verifica se ele está disponível
+;para atender um novo pet, ou seja, caso algum de seus espaços de atendimento seja "livre", devolve
+;verdadeiro, caso contrário, gera um resultado falso.
+;=====================================================================================================
+
+; ---------------------------------
+; FUNÇÃO  verifica-disponibilidade:
+; ---------------------------------
+
+ ; verifica-disponibilidade: Vet -> booelano
+ ;Objetivo: Função que dada veterinário, verifica se ele está disponível para atender um novo pet, caso ele tenha algum espaço livre.
+ ; exemplos:
+ ; (verifica-disponibilidade Ney) -> false
+ ; (verifica-disponibilidade Vitor) -> true
+
+ ;Corpo
+(define (verifica-disponibilidade Vet) ;;dada a entrada Vet
+  (or   ;; se uma das opções for verdadeira, devolve true
+  (equal? "livre" (Vet-atend1 Vet)) ;; verifica se o vet tem o espaço livre 
+  (equal? "livre" (Vet-atend2 Vet)) ;; verifica se o vet tem o espaço livre 
+  (equal? "livre" (Vet-atend3 Vet)))) ;;verifica se o vet tem o espaço livre 
+
+; Testes para função
+(check-expect (verifica-disponibilidade Ney) false)
+(check-expect (verifica-disponibilidade Jamile) true )
+(check-expect (verifica-disponibilidade Rogerao) true)
+
+
+
+;#####################################################################################################
+;### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 ### 3 #####
+;#####################################################################################################
+
+
+;#####################################################################################################
+;### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 #####
+;#####################################################################################################
+;=====================================================================================================
+;Quando um animal chega na petshop para ser atendido, deve ser verificado se o veterinário pode ou não atendê-lo. Desenvolva uma função chamada adiciona-pet que, dado um veterinário e um animal, nesta ordem, realiza o encaminhamento deste animal para este veterinário. O animal deve ser inserido na primeira posição de atendimento livre do veterinário, gerando assim um novo registro de veterinário. Caso não seja possível o encaixe (ou seja, caso todas as posições estejam ocupadas), devolver a frase
+;"Sem horário disponível".
+;=====================================================================================================
+
+;--------------------------------
+; TIPO VetOuString:
+;--------------------------------
+; o Tipo VetOuString é:
+; 1. Um elemento do tipo Vet, ou
+; 2. String, uma mensagem mensagem.
+
+
+; ---------------------
+; FUNÇÃO  adiciona-pet:
+; ---------------------
+
+;; adiciona-pet: Vet Pet -> VetOuString
+;; Objetivo: Dado um Veterinário e um Pet, verifica se o veterinário tem um algum horário ;livre na sua agenda para adicionar o Pet. Caso possua, atualiza os atendimentos do ;veterinário, caso contrário retorna a mensagem "Sem horário disponível".
+;Exemplos:
+; (adiciona-pet Ney Rosinha) -> "Sem horário disponível"
+; (adiciona-pet Jamile Rosinha) ->  (define Jamile (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Rosinha))
+
+;Corpo
+
+(define (adiciona-pet Vet Pet ) ;; dado um Vet e um Pet
+  (cond
+  [(verifica-disponibilidade Vet)
+    (cond 
+         )
+
+
+;#####################################################################################################
+;### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 #####
+;#####################################################################################################
+
+
+;#####################################################################################################
+;### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 #####
+;#####################################################################################################
+;=====================================================================================================
+;Defina um tipo de dados chamado PetShop, que deve registrar o nome da petshop, o endereço, o telefone
+;de contato, e os dois veterinários que estão de plantão no momento (coloque os atributos da estrutura
+;nesta ordem). O nome e o endereço devem ser do tipo String, o telefone do tipo Número. Os vetenirários
+;de plantão devem ser do tipo Vet ou podem ser a string "vago" (representando que um dos plantonistas
+;não está disponível). Defina 3 constantes cujos valores sejam do tipo PetShop.
+;=====================================================================================================
+
+;(define-struct PetShop (...))
+;...
+
+;#####################################################################################################
+;### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 #####
+;#####################################################################################################
+
+
+
+;#####################################################################################################
+;### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 #####
+;#####################################################################################################
+;=====================================================================================================
+;No momento da troca de turno, o registro da petshop deve ser atualizado, removendo os veterinários que
+;não atuam no novo turno de trabalho. Construa uma função chamada termina-plantão que, dados uma PetShop
+;e o novo turno (que pode ser "Manhã", "Tarde" ou "Noite"), nesta ordem, remove do registro os
+;veterinários que não atuam neste novo turno. No caso de um veterinário ser removido, o registro deste
+;veterinário na petshop deve atualizado para ao valor "vago". 
+;=====================================================================================================
+
+; --------------------
+; FUNÇÃO  termina-plantão:
+; --------------------
+
+
+;#####################################################################################################
+;### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 #####
+;#####################################################################################################
+
+
+;#####################################################################################################
+;### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 #####
+;#####################################################################################################
+;=====================================================================================================
+;Quando um animal chega na petshop para atendimento, é necessário verificar se algum dos veterinários
+;de plantão presta atendimento para este tipo de animal e tem horário livre para atendê-lo. Desenvolva
+;uma função chamada aloca-pet-vet que, dados um animal (tipo Pet) e uma petshop (tipo PetShop), nesta
+;ordem, verifica se algum dos veterinários que estão de plantão atende este tipo de animal e se possui
+;vaga para o seu atendimento. Em caso positivo, deve-se incluir este animal no primeiro espaço de
+;atendimento livre do veterinário e atualizar o registro da petshop. Caso contrário, deve-se retornar
+;a mensagem "Sem horário disponível".
+;=====================================================================================================
+
+; --------------------------
+; FUNÇÃO  aloca-pet-vet:
+; --------------------------
+
+
+;#####################################################################################################
+;### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 #####
+;#####################################################################################################
+
+
+;#####################################################################################################
+;### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 #####
+;#####################################################################################################
+;=====================================================================================================
+;Desenvolva uma função chamada gera-lista-atendimentos que recebe uma PetShop e gera uma lista dos
+;atendimentos que serão realizados nesta petshop pelos veterinários de plantão. A saída desta função
+;deve ser uma imagem contendo o nome, endereço e telefone da petshop e, para cada veterinário de
+;plantão, o nome do veterinário e os animais que serão atendidos. Para cada animal atendido, devem ser
+;mostrados o nome, o tipo de animal e a idade.
+;=====================================================================================================
+
+; ------------------------
+; FUNÇÃO  gera-lista-atendimentos:
+; ------------------------
+
+;#####################################################################################################
+;### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 #####
+;#####################################################################################################
