@@ -92,7 +92,7 @@
 ;  (é-pet? "livre") -> false
 
 ; Corpo
-(define (é-pet? PetOuString) ;; Dado um PetOu String
+(define (é-pet? PetOuString) ;; Dado uma PetOuString
   (cond ;; se...
   [(not (string? PetOuString)) #true] ;; se a entrada for do tipo Pet, retorna true
   [else #false])) ;; caso contrário, retorna false
@@ -150,7 +150,9 @@
 ;### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 ### 4 #####
 ;#####################################################################################################
 ;=====================================================================================================
-;Quando um animal chega na petshop para ser atendido, deve ser verificado se o veterinário pode ou não atendê-lo. Desenvolva uma função chamada adiciona-pet que, dado um veterinário e um animal, nesta ordem, realiza o encaminhamento deste animal para este veterinário. O animal deve ser inserido na primeira posição de atendimento livre do veterinário, gerando assim um novo registro de veterinário. Caso não seja possível o encaixe (ou seja, caso todas as posições estejam ocupadas), devolver a frase
+;Quando um animal chega na petshop para ser atendido, deve ser verificado se o veterinário pode ou não atendê-lo. Desenvolva uma função chamada adiciona-pet que, 
+;dado um veterinário e um animal, nesta ordem, realiza o encaminhamento deste animal para este veterinário. O animal deve ser inserido na primeira posição 
+;de atendimento livre do veterinário, gerando assim um novo registro de veterinário. Caso não seja possível o encaixe (ou seja, caso todas as posições estejam ocupadas), devolver a frase
 ;"Sem horário disponível".
 ;=====================================================================================================
 
@@ -167,18 +169,61 @@
 ; ---------------------
 
 ;; adiciona-pet: Vet Pet -> VetOuString
-;; Objetivo: Dado um Veterinário e um Pet, verifica se o veterinário tem um algum horário ;livre na sua agenda para adicionar o Pet. Caso possua, atualiza os atendimentos do ;veterinário, caso contrário retorna a mensagem "Sem horário disponível".
+;; Objetivo: Dado um Veterinário e um Pet, verifica se o veterinário tem um algum horário ;livre na sua agenda para adicionar o Pet. Caso possua, atualiza 
+;os atendimentos do ;veterinário, caso contrário retorna a mensagem "Sem horário disponível".
 ;Exemplos:
 ; (adiciona-pet Ney Rosinha) -> "Sem horário disponível"
 ; (adiciona-pet Jamile Rosinha) ->  (define Jamile (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Rosinha))
 
 ;Corpo
 
-(define (adiciona-pet Vet Pet ) ;; dado um Vet e um Pet
-  (cond
-  [(verifica-disponibilidade Vet)
-    (cond 
-         )
+(define (adiciona-pet Vet Pet) ;; dado um Vet e um Pet
+  (cond    ;; Se houver disponibilidade do veterinário,então...
+   [(equal? true (verifica-disponibilidade Vet)) 
+    
+     (cond ;;Se o atendimento 1 está disponível, e atualiza o veterinário
+      [(equal? "livre" (Vet-atend1 Vet)) 
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) Pet (Vet-atend2 Vet) (Vet-atend3  Vet))];; atualiza o atend1 do veterinário.
+      
+      [(equal? "livre" (Vet-atend2 Vet)) ;;Se o atendimento 2 está disponível,
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) Pet (Vet-atend3  Vet))];; atualiza o atend2 do veterinário.
+      
+      [(equal? "livre" (Vet-atend3 Vet)) ;;Se o atendimento 3 está disponível,
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) (Vet-atend2  Vet) Pet)];; atualiza o atend3 do veterinário.
+      
+      [else "Sem horário disponível"])] ;; caso contrário, é um erro e não possui antendimento livre.
+    [else "Sem horário disponível"])) ;; caso contrário, não possui antendimento livre.
+
+
+
+;; Função 2 - mais prática usando a é-pet?
+
+(define (adiciona-pet-2 Vet Pet) ;; dado um Vet e um Pet
+  (cond    ;; Se houver disponibilidade do veterinário,então...
+   [(equal? true (verifica-disponibilidade Vet)) 
+    
+     (cond ;;Se a primeira posição de atendimento do veterinário não for um elemento da estrutura Pet,...
+      [(not (é-pet? (Vet-atend1 Vet))) 
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) Pet (Vet-atend2 Vet) (Vet-atend3  Vet))];;cria um novo
+      ;registro do veterinário adicionando o Pet a primeira posição de atendimento.
+      
+      [(not (é-pet? (Vet-atend2 Vet))) ;;Se a segunda posição de atendimento do veterinário não for um elemento da estrutura Pet,...
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) Pet (Vet-atend3  Vet))];;cria um novo registro do veterinário adicionando o Pet da segunda posição de atendimento.
+      
+      [(not (é-pet? (Vet-atend3 Vet))) ;;Se a terceira posição de atendimento do veterinário não for um elemento da estrutura Pet,...
+      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) (Vet-atend2  Vet) Pet)];; cria um novo registro do veterinário adicionando o Pet da segunda posição de atendimento.
+      
+      [else "Sem horário disponível"])] ;; caso contrário, é um erro e não possui antendimento livre.
+    [else "Sem horário disponível"])) ;; caso contrário, não possui antendimento livre.
+
+
+;; testes da função
+(check-expect (adiciona-pet Jamile Fofa) (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Fofa))
+(check-expect (adiciona-pet Ney Fofa) "Sem horário disponível")
+
+(check-expect (adiciona-pet-2 Jamile Fofa) (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Fofa))
+(check-expect (adiciona-pet-2 Ney Fofa) "Sem horário disponível")
+
 
 
 ;#####################################################################################################
