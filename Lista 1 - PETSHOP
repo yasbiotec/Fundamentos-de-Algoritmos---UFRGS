@@ -200,7 +200,7 @@
 
 
 ;; testes da função
-(check-expect (adiciona-pet Jamile Fofa) (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Fofa))
+(check-expect (adiciona-pet Jamile Fofa) (make-Vet "Jamile" "manhã" "peixe" Jubileu Babao Fofa))
 (check-expect (adiciona-pet Ney Fofa) "Sem horário disponível")
 
 
