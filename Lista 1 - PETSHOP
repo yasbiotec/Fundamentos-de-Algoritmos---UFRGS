@@ -244,20 +244,21 @@
 (define-struct PetShop (nome endereco telefone Vet1 Vet2))
   ;Um elemento do tipo Petshop tem o formato: (make-Petshop (nome endereco telefone Vet1 Vet2))      
 ;onde:
-  ;nome:String
-  ;endereco:String
-  ;telefone:Numero
-  ;Vet1:String
-  ;Vet2:String
+  ;nome:String, se refere ao nome do petshop
+  ;endereco:String, se refere ao endereço do petshop
+  ;telefone:Numero, é o numero de telefone do petshop
+  ;Vet1:VetOuString, pode ser do tipo Vet, ou a string livre
+  ;Vet2:VetOuString, pode ser do tipo Vet, ou a string livre
 
-(define Petshop1
-  (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 "Dr. Xavier" "Dr. Erik Magnus"))
+((define Petshop1
+  (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 Vitor Ney))
 
 (define Petshop2
-  (make-PetShop "Liga dos Pets" "Avenida Opal" 19122019 "Dr. Bruce" "Dr. Clark"))
-
+  (make-PetShop "Liga dos Pets" "Avenida Opal" 19122019 Jamile Mari))
+ 
 (define Petshop3
-  (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "Dr. Ana" "Dr. Carlos"))
+  (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "livre" Rogerao))
+
 
 ;#####################################################################################################
 ;### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 #####
