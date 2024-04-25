@@ -56,12 +56,13 @@
 
 
 ;Constantes do tipo Vet:
-(define Vitor (make-Vet "Vitor" "manhã" "cancer" "livre" "livre" Biu))
-(define Mari (make-Vet "Mari" "noite" "gravidez" Jubileu "livre" "livre"))
-(define Rogerao (make-Vet "Rogerao" "tarde" "silvestres" "livre" Rosinha Fofa))
-(define Jamile (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao "livre"))
-(define Ney (make-Vet "Ney" "noite" "gravidez" Biu Fofa Jubileu))
-;...
+(define Vitor (make-Vet "Vitor" "manhã" "boi" "livre" "livre" Biu))
+(define Mari (make-Vet "Mari" "noite" "cachorro" Jubileu "livre" "livre"))
+(define Rogerao (make-Vet "Rogerao" "tarde" "ema" "livre" Rosinha Fofa))
+(define Jamile (make-Vet "Jamile" "manhã" "peixe" Jubileu Babao "livre"))
+(define Ney (make-Vet "Ney" "noite" "cachorro" Biu Fofa Jubileu))
+(define Dan (make-Vet "Dan" "noite" "leao" Biu "livre" Jubileu))
+
 
 
 
@@ -177,28 +178,9 @@
 
 ;Corpo
 
+
+
 (define (adiciona-pet Vet Pet) ;; dado um Vet e um Pet
-  (cond    ;; Se houver disponibilidade do veterinário,então...
-   [(equal? true (verifica-disponibilidade Vet)) 
-    
-     (cond ;;Se o atendimento 1 está disponível, e atualiza o veterinário
-      [(equal? "livre" (Vet-atend1 Vet)) 
-      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) Pet (Vet-atend2 Vet) (Vet-atend3  Vet))];; atualiza o atend1 do veterinário.
-      
-      [(equal? "livre" (Vet-atend2 Vet)) ;;Se o atendimento 2 está disponível,
-      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) Pet (Vet-atend3  Vet))];; atualiza o atend2 do veterinário.
-      
-      [(equal? "livre" (Vet-atend3 Vet)) ;;Se o atendimento 3 está disponível,
-      (make-Vet (Vet-nome_vet Vet) (Vet-turno Vet) (Vet-especialidade Vet) (Vet-atend1 Vet) (Vet-atend2  Vet) Pet)];; atualiza o atend3 do veterinário.
-      
-      [else "Sem horário disponível"])] ;; caso contrário, é um erro e não possui antendimento livre.
-    [else "Sem horário disponível"])) ;; caso contrário, não possui antendimento livre.
-
-
-
-;; Função 2 - mais prática usando a é-pet?
-
-(define (adiciona-pet-2 Vet Pet) ;; dado um Vet e um Pet
   (cond    ;; Se houver disponibilidade do veterinário,então...
    [(equal? true (verifica-disponibilidade Vet)) 
     
@@ -221,8 +203,7 @@
 (check-expect (adiciona-pet Jamile Fofa) (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Fofa))
 (check-expect (adiciona-pet Ney Fofa) "Sem horário disponível")
 
-(check-expect (adiciona-pet-2 Jamile Fofa) (make-Vet "Jamile" "manhã" "domesticos" Jubileu Babao Fofa))
-(check-expect (adiciona-pet-2 Ney Fofa) "Sem horário disponível")
+
 
 
 
@@ -244,12 +225,13 @@
 (define-struct PetShop (nome endereco telefone Vet1 Vet2))
   ;Um elemento do tipo Petshop tem o formato: (make-Petshop (nome endereco telefone Vet1 Vet2))      
 ;onde:
-  ;nome:String, se refere ao nome do petshop
-  ;endereco:String, se refere ao endereço do petshop
-  ;telefone:Numero, é o numero de telefone do petshop
-  ;Vet1:VetOuString, pode ser do tipo Vet, ou a string livre
-  ;Vet2:VetOuString, pode ser do tipo Vet, ou a string livre
+  ;nome:String, se refere ao nome do petshop.
+  ;endereco:String, se refere ao endereço do petshop.
+  ;telefone:Numero, é o numero de telefone do petshop.
+  ;Vet1:VetOuString, pode ser do tipo Vet, ou a string "livre".
+  ;Vet2:VetOuString, pode ser do tipo Vet, ou a string "livre".
 
+;;Definição das constantes do tipo Petshop:
 ((define Petshop1
   (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 Vitor Ney))
 
@@ -259,6 +241,8 @@
 (define Petshop3
   (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "livre" Rogerao))
 
+(define Petshop4 
+   (make-PetShop "Zoo" "Rua_D" 54321 "Vazio" Dan ))
 
 ;#####################################################################################################
 ;### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 ### 5 #####
