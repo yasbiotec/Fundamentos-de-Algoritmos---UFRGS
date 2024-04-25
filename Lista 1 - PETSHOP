@@ -289,6 +289,126 @@
 ; --------------------------
 
 
+;O tipo PetShopOuString pode ser:
+; 1. PetShop, tipo PetShop ou
+; 2. String, uma string "Sem horário disponível"
+
+
+
+;; aloca-pet-vet: Pet Petshop -> PetshopOUString
+;; Objetivo: verifica se algum dos veterinários que estão de plantão atende este tipo de animal do Pet, e se possui vaga para o seu atendimento, caso positivo inclui o animal para o primeiro espaço de atendimento livre do Veterinário disponível e atualizar o registro do Petshop.
+
+;;Exemplos:
+;   1° exemplo:
+;   (aloca-pet-vet Pedroka Petshop2) -> (PetShop "Liga dos Pets" "Avenida Opal" 19122019 (Vet "Jamile" "manhã" "peixe" (Pet "jubileu" "preto" 20 "xandao" "cachorro") 
+;  (Pet "Babao" "azul" 30 "livia" "peixe") "livre" )(Vet "Mari" "noite" "cachorro" (Pet "jubileu" "preto" 20 "xandao" "cachorro" )(Pet "Pedroka" "white" 10 "jaque" "cachorro") "livre"))
+;
+;   2° exemplo:
+;   (aloca-pet-vet Babao Petshop2) -> (PetShop "Liga dos Pets" "Avenida Opal" 19122019 (Vet "Jamile" "manhã" "peixe" (Pet "jubileu" "preto" 20 "xandao" "cachorro" )
+;  (Pet "Babao" "azul" 30 "livia" "peixe" )(Pet "Babao" "azul" 30 "livia" "peixe" ) )(Vet "Mari" "noite" "cachorro" (Pet "jubileu" "preto" 20 "xandao" "cachorro" ) "livre" "livre"))
+
+
+;;Corpo
+
+(define (aloca-pet-vet PetOuString PetShop) ;; dados um animal (tipo Pet) e uma PetShop (tipo PetShop)
+  (cond
+      
+    ;Se as DUAS posições de veterinários da PetShop não forem do tipo Vet, retorna a string "Sem horário disponível"
+    [(and  (not(Vet? (PetShop-VetOuString1 PetShop)))
+           (not(Vet? (PetShop-VetOuString2 PetShop)))) "Sem horário disponível"]
+     
+      ;Se o 1° veterinário da PetShop for do tipo Vet e 
+     
+       [(and (Vet? (PetShop-VetOuString1 PetShop)) 
+             
+          ;;e verifica o Pet, se é do tipo Pet ou "vazio",
+        
+          (é-pet? PetOuString))   
+           
+           ;; retorna a verificação das camadas interiores:
+           (cond
+             ;;verifica...
+             [(and 
+             ;; se o 1° veterinário tem especialidade para atender o tipo de animal,
+             (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString1 PetShop)))
+             ;; verifica se o veterinário tem disponibilidade em atender o animal.
+             (verifica-disponibilidade (PetShop-VetOuString1 PetShop)))
+             ;; retorna o Petshop com atualização do registro com o pet adicionado ao veterinário.
+             (make-PetShop (PetShop-nome PetShop) (PetShop-endereco PetShop) (PetShop-telefone PetShop) 
+             (adiciona-pet(PetShop-VetOuString1 PetShop) PetOuString) (PetShop-VetOuString2 PetShop))]
+            
+            
+            ;; senão tiver a mesma especialidade ou disponibilidade, retorna para verifica o segundo veterinário.
+            
+            [else ;; caso contrário,...
+             
+              (cond
+             
+               ;Se o 2° veterinário da PetShop for do tipo Vet,
+
+               [(and (Vet? (PetShop-VetOuString1 PetShop)) 
+             
+                ;;e verifica o Pet, se é do tipo Pet ou "vazio",
+        
+                (é-pet? PetOuString)) 
+
+                ;; se for do tipo Pet,
+                 (cond
+                 ;;verifica...
+                   [(and 
+                    ;; se o 2° veterinário tem especialidade para atender o tipo de animal. 
+                    (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString2 PetShop)))
+                    ;; verifica se o veterinário tem disponibilidade em atender o animal.
+                    (verifica-disponibilidade (PetShop-VetOuString2 PetShop)))
+                    ;; retorna o Petshop com atualização do registro com o pet adicionado ao veterinário.
+                    (make-PetShop (PetShop-nome PetShop) (PetShop-endereco PetShop) (PetShop-telefone PetShop) 
+                                (PetShop-VetOuString1 PetShop) (adiciona-pet(PetShop-VetOuString2 PetShop)
+                                                                            PetOuString))]
+
+
+                 ;; senão tiver a mesma especialidade ou disponibilidade, retorna "Sem horário disponível"
+                 [else "Sem horário disponível" ])])])]
+
+               
+   
+   ;Se o 2° veterinário da PetShop for do tipo Vet,
+
+   [(and (Vet? (PetShop-VetOuString2 PetShop)) 
+             
+          ;;e verifica o Pet, se é do tipo Pet ou "vazio",
+        
+      (é-pet? PetOuString))    
+
+      ;; se for do tipo Pet,
+      (cond
+       ;;verifica...
+       [(and 
+         ;; se o 2° veterinário tem especialidade para atender o tipo de animal. 
+         (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString2 PetShop)))
+         ;; verifica se o veterinário tem disponibilidade em atender o animal.
+         (verifica-disponibilidade (PetShop-VetOuString2 PetShop)))
+        ;; retorna o Petshop com atualização do registro com o pet adicionado ao veterinário.
+         (make-PetShop (PetShop-nome PetShop) (PetShop-endereco PetShop) (PetShop-telefone PetShop) 
+                      (PetShop-VetOuString1 PetShop) (adiciona-pet(PetShop-VetOuString2 PetShop) PetOuString))]
+
+
+       ;; senão tiver a mesma especialidade ou disponibilidade, retorna "Sem horário disponível"
+       [else "Sem horário disponível" ])]
+
+     ;; senão for do tipo Vet ou Pet, retorna a mensagem "Sem horário disponível"
+     [else "Sem horário disponível"]))
+          
+          
+                   
+           
+;;Testes:
+
+(check-expect (aloca-pet-vet Babao Petshop2) (make-PetShop "Liga dos Pets" "Avenida Opal" 19122019 (make-Vet "Jamile" "manhã" "peixe" Jubileu Babao Babao) 
+(make-Vet "Mari" "noite" "cachorro" Jubileu "livre" "livre"))) 
+
+(check-expect (aloca-pet-vet Babao Petshop3) "Sem horário disponível")
+
+
 ;#####################################################################################################
 ;### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 ### 7 #####
 ;#####################################################################################################
