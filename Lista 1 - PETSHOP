@@ -232,7 +232,7 @@
   ;VetouString2: VetOuString, pode ser do tipo Vet, ou a string "Vago".
 
 ;;Definição das constantes do tipo Petshop:
-((define Petshop1
+(define Petshop1
   (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 Vitor Ney))
 
 (define Petshop2
@@ -271,17 +271,21 @@
 ; (termina-plantão Petshop1 "manhã") ->  (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 "vago" Ney)
 ; (termina-plantão Petshop3 "noite") -> (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "vago" "vago"))
 
-(define (termina-plantão ps turno)
-    ;;constroi um novo registro
+
+;corpo do algoritmo
+(define (termina-plantão ps turno) ;;Dado um tipo PetShop e uma string (turno)
+    ;;constroi um novo registro do PetShop
                     (make-PetShop
                     (PetShop-nome ps)
                     (PetShop-endereco ps)
                     (PetShop-telefone ps)
-                    (verifica-turno (PetShop-Vet1 ps) turno)
-                    (verifica-turno (PetShop-Vet2 ps) turno)))
+                    (verifica-turno (PetShop-VetOuString1 ps) turno)
+                    (verifica-turno (PetShop-VetOuString2 ps) turno)))
 
+
+;;testes
 (check-expect (termina-plantão Petshop2 "manhã") (make-PetShop "Liga dos Pets"  "Avenida Opal"  19122019
-                                                               (make-Vet "Jamile" "manhã" "domesticos"
+                                                               (make-Vet "Jamile" "manhã" "peixe"
                                                                 (make-Pet  "jubileu" "preto" 20 "xandao"  "cachorro")
                                                                 (make-Pet "Babao" "azul" 30 "livia" "peixe") "livre")
                                                                "Vago"))
