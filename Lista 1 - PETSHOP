@@ -222,14 +222,14 @@
 ;de plantão devem ser do tipo Vet ou podem ser a string "vago" (representando que um dos plantonistas
 ;não está disponível). Defina 3 constantes cujos valores sejam do tipo PetShop.
 ;=====================================================================================================
-(define-struct PetShop (nome endereco telefone VetouString1 VetouString2))
+(define-struct PetShop (nome endereco telefone VetOuString1 VetOuString2))
  ;Um elemento do tipo Petshop tem o formato: (make-Petshop (nome endereco telefone VetOuString1 VetOuString2))      
  ;onde:
   ;nome: String, se refere ao nome do petshop.
   ;endereco: String, se refere ao endereço do petshop.
   ;telefone: Número, é o numero de telefone do petshop.
   ;VetOuString1: VetOuString, pode ser do tipo Vet, ou a string "Vago".
-  ;VetouString2: VetOuString, pode ser do tipo Vet, ou a string "Vago".
+  ;VetOuString2: VetOuString, pode ser do tipo Vet, ou a string "Vago".
 
 ;;Definição das constantes do tipo Petshop:
 (define Petshop1
