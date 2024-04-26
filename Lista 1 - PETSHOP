@@ -468,6 +468,85 @@
 ; FUNÇÃO  gera-lista-atendimentos:
 ; ------------------------
 
+;gera-lista-atendimentos: PetShop -> imagem
+;objetivo: recebe uma PetShop e gera uma imagem contendo o nome, endereço e telefone da petshop e, para cada veterinário de
+;plantão, o nome do veterinário e os animais que serão atendidos. Para cada animal atendido, devem ser
+;mostrados o nome, o tipo de animal e a idade.
+(define (gera-lista-atendimentos ps)
+  (overlay
+   (above(text (PetShop-nome ps) 60 "black")
+         (text (PetShop-endereco ps) 40 "darkgray")
+         (text (number->string (PetShop-telefone ps)) 40 "darkgray")
+         (cond
+          [(equal? (PetShop-VetouString1 ps) "livre")(text "" 1 "transparent")];se o espaço de plantao for livre completa com texto transparente
+          [else (above(text (Vet-nome_vet (PetShop-VetouString1 ps)) 30 "blue");senão, completa com o nome do vet de plantao junto com os pets 
+                      (cond
+                       [(equal? (Vet-atend1 (PetShop-VetouString1 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text 
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend1 (PetShop-VetouString1 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend1 (PetShop-VetouString1 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend1 (PetShop-VetouString1 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      (cond
+                       [(equal? (Vet-atend2 (PetShop-VetouString1 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text 
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend2 (PetShop-VetouString1 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend2 (PetShop-VetouString1 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend2 (PetShop-VetouString1 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      (cond
+                       [(equal? (Vet-atend3 (PetShop-VetouString1 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text 
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend3 (PetShop-VetouString1 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend3 (PetShop-VetouString1 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend3 (PetShop-VetouString1 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      )])
+         (cond
+          [(equal? (PetShop-VetouString2 ps) "livre")(text "" 1 "transparent")];se o espaço de plantao for livre completa com texto transparente
+          [else (above(text (Vet-nome_vet (PetShop-VetouString2 ps)) 30 "blue");senão, completa com o nome do vet de plantao junto com os pets 
+                      (cond
+                       [(equal? (Vet-atend1 (PetShop-VetouString2 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text 
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend1 (PetShop-VetouString2 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend1 (PetShop-VetouString2 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend1 (PetShop-VetouString2 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      (cond
+                       [(equal? (Vet-atend2 (PetShop-VetouString2 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text 
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend2 (PetShop-VetouString2 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend2 (PetShop-VetouString2 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend2 (PetShop-VetouString2 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      (cond
+                       [(equal? (Vet-atend3 (PetShop-VetouString2 ps)) "livre")(text "" 1 "transparent")];se o espaço de atendimento do vet for livre completa com texto transparente
+                       [else (text
+                              (string-append 
+                               (Pet-nome_pet (Vet-atend3 (PetShop-VetouString2 ps))) 
+                               " - "
+                               (Pet-tipo_animal (Vet-atend3 (PetShop-VetouString2 ps)))
+                               " - "
+                               (number->string (Pet-idade (Vet-atend3 (PetShop-VetouString2 ps))))) 20 "red")]);senão retorna o pet junto com seu tipo e idade
+                      )])
+         )
+   (rectangle 600 600 "solid" "lightblue"))
+)
+
+
+(gera-lista-atendimentos Petshop2)
+
+
 ;#####################################################################################################
 ;### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 ### 8 #####
 ;#####################################################################################################
