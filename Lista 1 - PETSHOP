@@ -262,9 +262,48 @@
 ;=====================================================================================================
 
 ; --------------------
-; FUNÇÃO  termina-plantão:
+; FUNÇÃO  termina-plantão: PetShop String -> PetShop
 ; --------------------
 
+;Objetivo: Dado um PetShop e um turno, verifica quais vets não atuam naquele turno e atualizam o
+;registro do petshop, para aquele turno no horario daquele vet como vago. 
+;Exemplos:
+; (termina-plantão Petshop1 "manhã") ->  (make-PetShop "X-Pets" "Avenida Graymalkin Lane" 5112002 "vago" Ney)
+; (termina-plantão Petshop3 "noite") -> (make-PetShop "Bichos Mania" "Rua C, 789" 111222333 "vago" "vago"))
+
+(define (termina-plantão ps turno)
+    ;;constroi um novo registro
+                    (make-PetShop
+                    (PetShop-nome ps)
+                    (PetShop-endereco ps)
+                    (PetShop-telefone ps)
+                    (verifica-turno (PetShop-Vet1 ps) turno)
+                    (verifica-turno (PetShop-Vet2 ps) turno)))
+
+(check-expect (termina-plantão Petshop2 "manhã") (make-PetShop "Liga dos Pets"  "Avenida Opal"  19122019
+                                                               (make-Vet "Jamile" "manhã" "domesticos"
+                                                                (make-Pet  "jubileu" "preto" 20 "xandao"  "cachorro")
+                                                                (make-Pet "Babao" "azul" 30 "livia" "peixe") "livre")
+                                                               "Vago"))
+(check-expect (termina-plantão Petshop2 "tarde") (make-PetShop  "Liga dos Pets"  "Avenida Opal"  19122019  "Vago" "Vago"))
+
+;;função auxiliar:
+
+ ; verifica-turno: Petshop String -> String
+ ;Objetivo: Função que dada veterinário de um petshop e um turno, devolve vago ou o proprio vet
+ ; exemplos:
+ ; (verifica-turno (Petshop1-vet1-turno) -> "manhã"
+; (verifica-turno (Petshop1-vet2-turno) -> "noite"
+
+ ;Corpo
+(define (verifica-turno vet turno_atual)
+  (cond
+    [(and (Vet? vet) (not (string=? (Vet-turno vet) turno_atual))) "Vago"]
+    [else vet]))
+
+; Testes para função
+(check-expect (verifica-turno Jamile "tarde") "Vago")
+(check-expect (verifica-turno Vitor "manhã") Vitor)
 
 ;#####################################################################################################
 ;### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 ### 6 #####
