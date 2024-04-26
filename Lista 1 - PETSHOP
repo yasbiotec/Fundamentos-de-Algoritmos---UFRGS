@@ -358,15 +358,13 @@
      
       ;Se o 1° veterinário da PetShop for do tipo Vet e 
      
-       [(and (Vet? (PetShop-VetOuString1 PetShop)) 
-             
-          ;;e verifica o Pet, se é do tipo Pet ou "vazio",
-        
+       [(and (Vet? (PetShop-VetOuString1 PetShop))   
+          ;;e se é do tipo Pet ou "vazio",
           (é-pet? PetOuString))   
            
-           ;; retorna a verificação das camadas interiores:
+           ;; retorna a verificação de especialidade e disponibilidade:
            (cond
-             ;;verifica...
+             ;;verifica as duas condições que...
              [(and 
              ;; se o 1° veterinário tem especialidade para atender o tipo de animal,
              (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString1 PetShop)))
@@ -379,7 +377,7 @@
             
             ;; senão tiver a mesma especialidade ou disponibilidade, retorna para verifica o segundo veterinário.
             
-            [else ;; caso contrário,...
+            [else ;; caso contrário, verifica o segundo veterinário
              
               (cond
              
@@ -387,13 +385,13 @@
 
                [(and (Vet? (PetShop-VetOuString1 PetShop)) 
              
-                ;;e verifica o Pet, se é do tipo Pet ou "vazio",
+                ;; se é do tipo Pet ou "vazio",
         
                 (é-pet? PetOuString)) 
 
                 ;; se for do tipo Pet,
                  (cond
-                 ;;verifica...
+                 ;;verifica as duas condições que..
                    [(and 
                     ;; se o 2° veterinário tem especialidade para atender o tipo de animal. 
                     (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString2 PetShop)))
@@ -406,21 +404,21 @@
 
 
                  ;; senão tiver a mesma especialidade ou disponibilidade, retorna "Sem horário disponível"
-                 [else "Sem horário disponível" ])])])]
+                 [else "Sem horário disponível" ])]
+               
+              ;;Caso não seja do tipo Vet ou Pet, retorna "Sem horário disponível"
+              [else "Sem horário disponível" ])])]
 
                
    
-   ;Se o 2° veterinário da PetShop for do tipo Vet,
-
-   [(and (Vet? (PetShop-VetOuString2 PetShop)) 
-             
-          ;;e verifica o Pet, se é do tipo Pet ou "vazio",
-        
+    ;Se o 2° veterinário da PetShop for do tipo Vet,
+    [(and (Vet? (PetShop-VetOuString2 PetShop))       
+    ;;e se é do tipo Pet 
       (é-pet? PetOuString))    
 
-      ;; se for do tipo Pet,
+      ;; retorna a verificação de especialidade e disponibilidade:
       (cond
-       ;;verifica...
+       ;;verifica as duas condições que..
        [(and 
          ;; se o 2° veterinário tem especialidade para atender o tipo de animal. 
          (string=? (Pet-tipo_animal PetOuString)(Vet-especialidade (PetShop-VetOuString2 PetShop)))
